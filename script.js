@@ -67,3 +67,9 @@ function formClasses(course, teachers, students) {
     return classes;
 }
 
+let english = new Course("English", 1, 1);
+
+let teachers = [new Teacher("Teacher 1"), new Teacher("Teacher 2")];
+let students = [new Student("Student 1"), new Student("Student 2"), new Student("Student 3")];
+
+console.log(formClasses(english, teachers, students));
