@@ -50,7 +50,7 @@ function formClasses(course, teachers, students) {
 
         classes.push(new Class(course, t, students.slice(idx, idx + numStudentsInThisClass)));
         idx += numStudentsInThisClass;
-}
+    }
 
     for (let c of classes) {
         if (c.students.length < course.minStudents) {
