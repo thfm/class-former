@@ -67,12 +67,9 @@ function formClasses(course, teachers, students) {
     return classes;
 }
 
-let english = new Course("English", 1, 1);
-
-let teachers = [new Teacher("Teacher 1"), new Teacher("Teacher 2")];
-let students = [new Student("Student 1"), new Student("Student 2"), new Student("Student 3")];
-
-console.log(formClasses(english, teachers, students));
+let courseNameInput = document.getElementById("courseNameInput");
+let courseMinStudentsInput = document.getElementById("courseMinStudentsInput");
+let courseMaxStudentsInput = document.getElementById("courseMaxStudentsInput");
 
 let studentInput = document.getElementById("studentInput");
 let studentAddButton = document.getElementById("studentAddButton");
@@ -132,4 +129,18 @@ teacherRemoveButton.onclick = function (event) {
     }
 }
 
+let formClassesButton = document.getElementById("formClassesButton");
+
+formClassesButton.onclick = function (event) {
+    let studentEntries = Array.from(getListEntries(studentList));
+    let students = studentEntries.map(entry => new Student(entry.innerHTML));
+
+    let teacherEntries = Array.from(getListEntries(teacherList));
+    let teachers = teacherEntries.map(entry => new Student(entry.innerHTML));
+
+    console.log(formClasses(new Course(courseNameInput.value, courseMinStudentsInput.value, courseMaxStudentsInput.value), teachers, students));
+}
+
+function getListEntries(list) {
+    return list.getElementsByTagName("li");
 }
