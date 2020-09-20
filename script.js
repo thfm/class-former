@@ -74,32 +74,62 @@ let students = [new Student("Student 1"), new Student("Student 2"), new Student(
 
 console.log(formClasses(english, teachers, students));
 
-let input = document.getElementById("studentInput");
-let addButton = document.getElementById("studentAddButton");
-let list = document.getElementById("studentList");
-let removeButton = document.getElementById("studentRemoveButton");
+let studentInput = document.getElementById("studentInput");
+let studentAddButton = document.getElementById("studentAddButton");
+let studentList = document.getElementById("studentList");
+let studentRemoveButton = document.getElementById("studentRemoveButton");
 
-input.onkeyup = function (event) {
+let teacherInput = document.getElementById("teacherInput");
+let teacherAddButton = document.getElementById("teacherAddButton");
+let teacherList = document.getElementById("teacherList");
+let teacherRemoveButton = document.getElementById("teacherRemoveButton");
+
+studentInput.onkeyup = function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
-        addButton.click();
+        studentAddButton.click();
     }
 }
 
-addButton.onclick = function (event) {
-    if (input.value) {
+studentAddButton.onclick = function (event) {
+    if (studentInput.value) {
         let entry = document.createElement("li");
-        entry.appendChild(document.createTextNode(input.value));
-        list.appendChild(entry);
-        input.value = "";
+        entry.appendChild(document.createTextNode(studentInput.value));
+        studentList.appendChild(entry);
+        studentInput.value = "";
     }
 }
 
-removeButton.onclick = function (event) {
-    let entries = list.getElementsByTagName("li");
+studentRemoveButton.onclick = function (event) {
+    let entries = studentList.getElementsByTagName("li");
     let numEntries = entries.length;
     if (numEntries > 0) {
         let lastEntry = entries[numEntries - 1];
-        list.removeChild(lastEntry);
+        studentList.removeChild(lastEntry);
+    }
+}
+
+teacherInput.onkeyup = function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        teacherAddButton.click();
+    }
+}
+
+teacherAddButton.onclick = function (event) {
+    if (teacherInput.value) {
+        let entry = document.createElement("li");
+        entry.appendChild(document.createTextNode(teacherInput.value));
+        teacherList.appendChild(entry);
+        teacherInput.value = "";
+    }
+}
+
+teacherRemoveButton.onclick = function (event) {
+    let entries = teacherList.getElementsByTagName("li");
+    let numEntries = entries.length;
+    if (numEntries > 0) {
+        let lastEntry = entries[numEntries - 1];
+        teacherList.removeChild(lastEntry);
     }
 }
