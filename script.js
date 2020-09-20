@@ -79,11 +79,6 @@ let studentAddButton = document.getElementById("studentAddButton");
 let studentList = document.getElementById("studentList");
 let studentRemoveButton = document.getElementById("studentRemoveButton");
 
-let teacherInput = document.getElementById("teacherInput");
-let teacherAddButton = document.getElementById("teacherAddButton");
-let teacherList = document.getElementById("teacherList");
-let teacherRemoveButton = document.getElementById("teacherRemoveButton");
-
 studentInput.onkeyup = function (event) {
     if (event.key === "Enter") {
         event.preventDefault();
@@ -101,13 +96,17 @@ studentAddButton.onclick = function (event) {
 }
 
 studentRemoveButton.onclick = function (event) {
-    let entries = studentList.getElementsByTagName("li");
+    let entries = getListEntries(studentList);
     let numEntries = entries.length;
     if (numEntries > 0) {
-        let lastEntry = entries[numEntries - 1];
-        studentList.removeChild(lastEntry);
+        studentList.removeChild(entries[numEntries - 1]);
     }
 }
+
+let teacherInput = document.getElementById("teacherInput");
+let teacherAddButton = document.getElementById("teacherAddButton");
+let teacherList = document.getElementById("teacherList");
+let teacherRemoveButton = document.getElementById("teacherRemoveButton");
 
 teacherInput.onkeyup = function (event) {
     if (event.key === "Enter") {
@@ -126,10 +125,11 @@ teacherAddButton.onclick = function (event) {
 }
 
 teacherRemoveButton.onclick = function (event) {
-    let entries = teacherList.getElementsByTagName("li");
+    let entries = getListEntries(teacherList);
     let numEntries = entries.length;
     if (numEntries > 0) {
-        let lastEntry = entries[numEntries - 1];
-        teacherList.removeChild(lastEntry);
+        teacherList.removeChild(entries[numEntries - 1]);
     }
+}
+
 }
