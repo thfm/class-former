@@ -73,3 +73,33 @@ let teachers = [new Teacher("Teacher 1"), new Teacher("Teacher 2")];
 let students = [new Student("Student 1"), new Student("Student 2"), new Student("Student 3")];
 
 console.log(formClasses(english, teachers, students));
+
+let input = document.getElementById("studentInput");
+let addButton = document.getElementById("studentAddButton");
+let list = document.getElementById("studentList");
+let removeButton = document.getElementById("studentRemoveButton");
+
+input.onkeyup = function (event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addButton.click();
+    }
+}
+
+addButton.onclick = function (event) {
+    if (input.value) {
+        let entry = document.createElement("li");
+        entry.appendChild(document.createTextNode(input.value));
+        list.appendChild(entry);
+        input.value = "";
+    }
+}
+
+removeButton.onclick = function (event) {
+    let entries = list.getElementsByTagName("li");
+    let numEntries = entries.length;
+    if (numEntries > 0) {
+        let lastEntry = entries[numEntries - 1];
+        list.removeChild(lastEntry);
+    }
+}
