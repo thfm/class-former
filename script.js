@@ -138,7 +138,26 @@ formClassesButton.onclick = function (event) {
     let teacherEntries = Array.from(getListEntries(teacherList));
     let teachers = teacherEntries.map(entry => new Student(entry.innerHTML));
 
-    console.log(formClasses(new Course(courseNameInput.value, courseMinStudentsInput.value, courseMaxStudentsInput.value), teachers, students));
+    let classes = formClasses(new Course(courseNameInput.value, courseMinStudentsInput.value, courseMaxStudentsInput.value), teachers, students);
+
+    let classesDiv = document.getElementById("classes");
+    classesDiv.innerHTML = ""; // Clears any existing classes.
+
+    for (let c of classes) {
+        let teacher = document.createElement("p");
+        teacher.appendChild(document.createTextNode("Teacher: " + c.teacher.name));
+        classesDiv.appendChild(teacher);
+
+        let studentDisplayList = document.createElement("ul");
+        let thing = document.createElement("p");
+        thing.appendChild(document.createTextNode("Students:"));
+        classesDiv.appendChild(thing);
+        for (let s of c.students) {
+            let student = document.createElement("li");
+            student.appendChild(document.createTextNode(s.name));
+            classesDiv.appendChild(student);
+        }
+    }
 }
 
 function getListEntries(list) {
