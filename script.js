@@ -1,10 +1,10 @@
-class Student {
+class Teacher {
     constructor(name) {
         this.name = name;
     }
 }
 
-class Teacher {
+class Student {
     constructor(name) {
         this.name = name;
     }
@@ -67,99 +67,100 @@ function formClasses(course, teachers, students) {
     return classes;
 }
 
-let courseNameInput = document.getElementById("courseNameInput");
-let courseMinStudentsInput = document.getElementById("courseMinStudentsInput");
-let courseMaxStudentsInput = document.getElementById("courseMaxStudentsInput");
-
-let studentInput = document.getElementById("studentInput");
-let studentAddButton = document.getElementById("studentAddButton");
-let studentList = document.getElementById("studentList");
-let studentRemoveButton = document.getElementById("studentRemoveButton");
-
-studentInput.onkeyup = function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        studentAddButton.click();
-    }
+function getListEntries(list) {
+    return list.getElementsByTagName("li");
 }
 
-studentAddButton.onclick = function (event) {
-    if (studentInput.value) {
-        let entry = document.createElement("li");
-        entry.appendChild(document.createTextNode(studentInput.value));
-        studentList.appendChild(entry);
-        studentInput.value = "";
+function createListEntryFromNameInput(nameInput) {
+    let entry = null;
+    if (nameInput.value) {
+        entry = document.createElement("li");
+        entry.appendChild(document.createTextNode(nameInput.value));
+        nameInput.value = "";
     }
+
+    return entry;
 }
 
-studentRemoveButton.onclick = function (event) {
-    let entries = getListEntries(studentList);
+function removeLastListEntry(list) {
+    let entries = getListEntries(list);
     let numEntries = entries.length;
     if (numEntries > 0) {
-        studentList.removeChild(entries[numEntries - 1]);
+        list.removeChild(entries[numEntries - 1]);
     }
 }
 
 let teacherInput = document.getElementById("teacherInput");
-let teacherAddButton = document.getElementById("teacherAddButton");
-let teacherList = document.getElementById("teacherList");
-let teacherRemoveButton = document.getElementById("teacherRemoveButton");
 
-teacherInput.onkeyup = function (event) {
-    if (event.key === "Enter") {
-        event.preventDefault();
-        teacherAddButton.click();
-    }
+let teacherNameInput = teacherInput.querySelector(".nameInput");
+let teacherAddButton = teacherInput.querySelector(".addButton");
+let teacherRemoveButton = teacherInput.querySelector(".removeButton");
+let teacherList = teacherInput.querySelector(".list");
+
+teacherNameInput.onkeyup = function (event) {
+    if (event.key === "Enter") { teacherAddButton.click(); }
 }
 
-teacherAddButton.onclick = function (event) {
-    if (teacherInput.value) {
-        let entry = document.createElement("li");
-        entry.appendChild(document.createTextNode(teacherInput.value));
-        teacherList.appendChild(entry);
-        teacherInput.value = "";
-    }
+teacherAddButton.onclick = function () {
+    let entry = createListEntryFromNameInput(teacherNameInput);
+    if (entry) { teacherList.appendChild(entry); }
 }
 
 teacherRemoveButton.onclick = function (event) {
-    let entries = getListEntries(teacherList);
-    let numEntries = entries.length;
-    if (numEntries > 0) {
-        teacherList.removeChild(entries[numEntries - 1]);
-    }
+    removeLastListEntry(teacherList);
 }
 
+let studentInput = document.getElementById("studentInput");
+
+let studentNameInput = studentInput.querySelector(".nameInput");
+let studentAddButton = studentInput.querySelector(".addButton");
+let studentRemoveButton = studentInput.querySelector(".removeButton");
+let studentList = studentInput.querySelector(".list");
+
+studentNameInput.onkeyup = function (event) {
+    if (event.key === "Enter") { studentAddButton.click(); }
+}
+
+studentAddButton.onclick = function (event) {
+    let entry = createListEntryFromNameInput(studentNameInput);
+    if (entry) { studentList.appendChild(entry); }
+}
+
+studentRemoveButton.onclick = function (event) {
+    removeLastListEntry(studentList);
+}
+
+let courseInput = document.getElementById("courseInput");
 let formClassesButton = document.getElementById("formClassesButton");
 
+let classesOutput = document.getElementById("classesOutput");
+
 formClassesButton.onclick = function (event) {
-    let studentEntries = Array.from(getListEntries(studentList));
-    let students = studentEntries.map(entry => new Student(entry.innerHTML));
+    let teachers = Array.from(getListEntries(teacherList)).map(entry => new Teacher(entry.innerHTML));
+    let students = Array.from(getListEntries(studentList)).map(entry => new Student(entry.innerHTML));
 
-    let teacherEntries = Array.from(getListEntries(teacherList));
-    let teachers = teacherEntries.map(entry => new Student(entry.innerHTML));
+    let classes = formClasses(
+        new Course(
+            courseInput.querySelector(".nameInput").value,
+            courseInput.querySelector(".minStudentsInput").value,
+            courseInput.querySelector(".maxStudentsInput").value
+        ),
+        teachers, students
+    );
 
-    let classes = formClasses(new Course(courseNameInput.value, courseMinStudentsInput.value, courseMaxStudentsInput.value), teachers, students);
-
-    let classesDiv = document.getElementById("classes");
-    classesDiv.innerHTML = ""; // Clears any existing classes.
+    classesOutput.innerHTML = ""; // Clears any existing output.
 
     for (let c of classes) {
-        let teacher = document.createElement("p");
-        teacher.appendChild(document.createTextNode("Teacher: " + c.teacher.name));
-        classesDiv.appendChild(teacher);
+        let teacherName = document.createElement("p");
+        teacherName.appendChild(document.createTextNode("Teacher: " + c.teacher.name));
+        classesOutput.appendChild(teacherName);
 
-        let studentDisplayList = document.createElement("ul");
-        let thing = document.createElement("p");
-        thing.appendChild(document.createTextNode("Students:"));
-        classesDiv.appendChild(thing);
+        let studentNames = document.createElement("ul");
         for (let s of c.students) {
-            let student = document.createElement("li");
-            student.appendChild(document.createTextNode(s.name));
-            classesDiv.appendChild(student);
+            let studentName = document.createElement("li");
+            studentName.appendChild(document.createTextNode(s.name));
+            studentNames.appendChild(studentName);
         }
+        classesOutput.appendChild(studentNames);
     }
-}
-
-function getListEntries(list) {
-    return list.getElementsByTagName("li");
 }

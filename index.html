@@ -7,30 +7,31 @@
 </head>
 
 <body>
-    <div>
-        <input type="text" id="courseNameInput" placeholder="e.g. English">
-        <input type="number" id="courseMinStudentsInput" value="5">
-        <input type="number" id="courseMaxStudentsInput" value="20">
-    </div>
-    <div>
-        <input type="text" id="studentInput" placeholder="e.g. John Smith">
-        <button type="button" id="studentAddButton">Add</button>
-        <button type="button" id="studentRemoveButton">Remove Last</button>
-
-        <ol id="studentList"></ol>
+    <div id="courseInput">
+        <input type="text" class="nameInput" placeholder="e.g. English">
+        <input type="number" class="minStudentsInput" value="5">
+        <input type="number" class="maxStudentsInput" value="20">
     </div>
 
-    <div>
-        <input type="text" id="teacherInput" placeholder="e.g. Mr Smith">
-        <button type="button" id="teacherAddButton">Add</button>
-        <button type="button" id="teacherRemoveButton">Remove Last</button>
+    <div id="teacherInput">
+        <input type="text" class="nameInput" placeholder="e.g. Mr Smith">
+        <button type="button" class="addButton">Add</button>
+        <button type="button" class="removeButton">Remove Last</button>
 
-        <ol id="teacherList"></ol>
+        <ol class="list"></ol>
+    </div>
+
+    <div id="studentInput">
+        <input type="text" class="nameInput" placeholder="e.g. John Smith">
+        <button type="button" class="addButton">Add</button>
+        <button type="button" class="removeButton">Remove Last</button>
+
+        <ol class="list"></ol>
     </div>
 
     <button type="button" id="formClassesButton">Form Classes</button>
 
-    <div id="classes"></div>
+    <div id="classesOutput"></div>
 
     <script src="script.js"></script>
 </body>
